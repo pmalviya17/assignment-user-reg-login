@@ -68,13 +68,23 @@ public class UserService implements IUserService{
         Optional<User> user = userRepository.findById(id);
 
         return user.map(User -> new ResponseEntity<>(User, HttpStatus.OK)).
-                orElseGet(() -> new ResponseEntity<>(new ApplicationRuntimeCustomErrors("User with id "
+                orElseGet(() -> new ResponseEntity<>(new ApplicationRuntimeCustomErrors("User record with this id "
                         + id + " not found"), HttpStatus.NOT_FOUND));
     }
 
     @Override
     public ResponseEntity<User> addUser(User user) {
-        return null;
+        if (userRepository.findByFirstName(user.getUserName()) != null) {
+            logger.error("Unable to create. A User with username {} already exist", user.getUserName());
+            return new ResponseEntity<User>
+                    (new ApplicationRuntimeCustomErrors("New User not created due to errors as, User with this username "
+                            + user.getUserName()+ " already exist."), HttpStatus.CONFLICT);
+        }
+        userRepository.save(user);
+        logger.info("Adding new User : {}", user);
+        userRepository.save(user);
+        logger.info("After saving the new User : {}", user);
+        return new ResponseEntity<User>(user, HttpStatus.CREATED);
     }
 
     @Override
