@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="icon" href="favicon.ico" />
+
+    <title>Amdocs User Registration App</title>
+
+    <!-- Bootstrap core CSS -->
+    <link
+            href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+            crossorigin="anonymous" />
+
+    <link th:href="@{css/style.css}" rel="stylesheet" />
+</head>
+
+
+<body class="gray-bg">
+
+<nav class="Header-nav Header-nav--primary" data-nc-element="primary-nav" data-content-field="navigation">
+    <div class="container-fluid">
+        <a href="/" class="btn btn-info navbar-btn" data-test="template-nav">Home</a>
+        <a href="/register-new-user" class="btn btn-info navbar-btn" data-test="template-nav">Register New User</a>
+        <a href="/show/1" class="btn btn-info navbar-btn" data-test="template-nav">Show 1st user</a>
+        <a href="/contact" class="btn btn-info navbar-btn" data-test="template-nav">Contact</a>
+    </div>
+</nav>
+
+<div th:switch="${users}" class="alert alert-info">
+    <h2 th:case="null">No users yet!</h2>
+    <div th:case="*">
+        <span class="lead">List of Users</span>
+        <table class="table table-hover table-bordered">
+            <thead>
+            <tr>
+                <th>UserName</th>
+                <th>Email</th>
+                <th>FirstName</th>
+                <th>LastName</th>
+                <th>ConfirmationToken</th>
+                <th>status</th>
+                <th>regDate</th>
+                <th width="100">Edit</th>
+                <th width="100">Deactivate</th>
+                <th width="100">Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user : ${users}">
+                <td th:text="${user.userName}"></td>
+                <td th:text="${user.email}"></td>
+                <td th:text="${user.firstName}"></td>
+                <td th:text="${user.lastName}"></td>
+
+                <td th:switch="${user.status}">
+                    <span th:case="'Deactivated'"><a th:href="@{/confirmuser?token={confirmationToken}(confirmationToken=${user.confirmationToken})}">Click here to Activate Your Account</a></span>
+                    <span th:case="'Activated'" th:text="${user.confirmationToken}"></span>
+                    <span th:case="'*'" th:text="${user.confirmationToken}"></span>
+                </td>
+                <td th:text="${user.status}"></td>
+                <td th:text="${user.regDate}"></td>
+                <td><a th:href="@{/updateuser?userName={userName}(userName=${user.userName})}">Edit</a></td>
+
+                <td th:switch="${user.status}">
+                    <span th:case="'Deactivated'">Can't deactivate as user is not active yet</span>
+                    <span th:case="'Activated'"><a th:href="@{/deactivate?id={id}(id=${user.id})}">Deactivate</a></span>
+                    <span th:case="'*'">n/a</span>
+                </td>
+                <td th:switch="${user.status}">
+                    <span th:case="'Deactivated'"><a th:href="@{/delete?id={id}(id=${user.id})}">Delete</a></span>
+                    <span th:case="'Activated'">Can't delete as user is still Active</a></span>
+                    <span th:case="'*'">n/a</span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+    <div ng-view></div><!--
+<script src="/webjars/angularjs/1.4.9/angular.js"></script>
+<script src="/webjars/angularjs/1.4.9/angular-resource.js"></script>
+<script src="/webjars/angularjs/1.4.9/angular-route.js"></script>
+<script src="js/app.js"></script>
+<script src="js/controller.js"></script>
+<link rel="stylesheet" href="/webjars/bootstrap/3.3.6/css/bootstrap.css">-->
+
+</body>
+</html>

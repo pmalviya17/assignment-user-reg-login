@@ -60,7 +60,7 @@ public class User {
     @Column(name = "status", nullable=false)
     @NotEmpty(message = "error.first.name.length")
     @Length(max = 50,  message = "error.name.length")
-    private UserStatus status;
+    private String status;
 
     @ApiModelProperty(notes = "Registration date of the user")
     @Column(name="date")
