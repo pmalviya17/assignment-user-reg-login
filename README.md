@@ -46,3 +46,27 @@ The **Spring Service** itself has a pretty common internal architecture:
   Response │  └─────────────┘    └─────────────┘ │   └─────────────┘
            └─────────────────────────────────────┘
   ```  
+  Application have got Crud functionalities as: 
+  - create user;
+  - read user;
+  - update user;
+  - delete user;
+  
+  ### How to build & run the application: 
+  * I am using IntelliJ maven plugin to test and deploy but there are couple of other ways you can achive this by using CLI tools. 
+
+
+use below **URL's** to test application on web browser: 
+  ```
+  http://localhost:9091/
+  or
+  http://localhost:9091/home
+  or
+  http://localhost:9091/welcome
+  or
+  http://localhost:9091/assignement
+  ```
+### Swagger API URL of the application
+```
+http://localhost:9091/swagger-ui.html
+```
