@@ -66,6 +66,33 @@ use below **URL's** to test application on web browser:
   or
   http://localhost:9091/assignement
   ```
+ <h3>AMDOCS User Registration HOME</h3>
+ <img src="images/UserRegistrationApp-Home.PNG" title = "AMDOCS User Registration HOME"/>
+ All Users list you can see along with other functionalities available at HOME
+ 
+ <h3>New user adding</h3>
+<img src="images/UserRegistrationApp-NewUserRegistration.PNG" title = "Create new user"/>
+New User can registrate using this. New user adding function calling on dinamical modal.
+
+<h3>New user added Successfully</h3>
+<img src="images/UserRegistrationApp-NewUserRegistration-OnSuccess.PNG" title = "New user created successfully"/>
+New User can registrate using this. New user adding function calling on dinamical modal.
+
+<h3>New user added UnSuccessfully</h3>
+<img src="images/UserRegistrationApp-NewUserRegistration-OnFailure.PNG" title = "New user creacreation failed with given error"/>
+New user creacreation failed with given error.
+
+
+
+<h3>Existing user updating</h3>
+<img src="images/editUser.png" title = "Update existing user"/>
+User can update existing intities. Updating function also calling on dinamical modal.
+
+<h3>Existing user removing</h3>
+<img src="images/removeUser.png" title = "Remove existing user"/>
+User can remove existing intities. To showing alert message calling dinamical modal.
+
+
 ### Swagger API URL of the application
 ```
 http://localhost:9091/swagger-ui.html
