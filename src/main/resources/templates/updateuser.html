@@ -1,5 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1"/>
+
+<link rel ="stylesheet" href="webjars/bootstrap/4.0.0-2/css/bootstrap.min.css"/>
+<script type="text/javascript" th:src="@{js/bottom.css}" src="../static/css/bottom.css"></script>
+<script type ="text/javascript" src="webjars/jquery/2.2.4/jquery.min.js"></script>
+<script type="text/javascript" th:src="@{js/fv.min.js}" src="../static/js/fv.min.js"></script>
+<script type ="text/javascript" src="webjars/bootstrap/4.0.0-2/js/bootstrap.min.js"></script>
 
 <head>
     <meta charset="utf-8" />
@@ -25,9 +32,10 @@
 </head>
 
 <body class="gray-bg">
+
 <div class="container-fluid">
     <a href="/"
-       class="btn btn-info navbar-btn"
+       class="btn btn-primary navbar-btn"
        role="button">
         Home
     </a>
@@ -46,7 +54,7 @@
 
         <div th:if="${invalidToken}" class="alert alert-danger"
              role="alert" th:text=${invalidToken}></div>
-        <form autocomplete="off" action="#" th:action="@{/updateuser}"
+        <form autocomplete="off" action="#" th:action="@{/user/update}"
               th:object="${user}" method="post" class="m-t" role="form"
               data-toggle="validator">
             <!--<input type="hidden" name="userName" th:value=${userName}  >-->
@@ -125,7 +133,7 @@
 
             </div>
             <button type="submit"
-                    class="btn btn-primary block full-width m-b">Update User</button>
+                    class="btn btn-success block full-width m-b">Update User</button>
         </form>
 
     </div>

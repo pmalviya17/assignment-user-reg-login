@@ -29,12 +29,11 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/", "/home","/assignement").permitAll()
-                .antMatchers("/register-new-user").permitAll()
-                .antMatchers("/updateuser").permitAll()
-                .antMatchers("/users").permitAll()
-                .antMatchers("/delete").permitAll()
-                .antMatchers("/deactivate").permitAll()
-
-                .antMatchers("/confirmuser").permitAll();
+                .antMatchers("/user/add").permitAll()
+                .antMatchers("/user/update").permitAll()
+                .antMatchers("/user/delete").permitAll()
+                .antMatchers("/user/deactivate").permitAll()
+                .antMatchers("/user/all").permitAll()
+                .antMatchers("/user/confirm").permitAll();
     }
 }

@@ -58,7 +58,6 @@ public class User {
 
     @ApiModelProperty(notes = "Active/DeActive Status of the user")
     @Column(name = "status", nullable=false)
-    @NotEmpty(message = "error.first.name.length")
     @Length(max = 50,  message = "error.name.length")
     private String status;
 

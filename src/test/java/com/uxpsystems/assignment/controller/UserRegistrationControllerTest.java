@@ -20,7 +20,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Date;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = UserRegistrationApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DirtiesContext(classMode=DirtiesContext.ClassMode.AFTER_CLASS)
@@ -40,7 +40,7 @@ public class UserRegistrationControllerTest {
 
     @Test
     public void getAllUsers() {
-        Response response = RestAssured.when().get("/users");
+        Response response = RestAssured.when().get("/user/all");
 
         assertEquals("200 must be returned", HttpStatus.NO_CONTENT.value(), response.statusCode());
     }
@@ -56,7 +56,7 @@ public class UserRegistrationControllerTest {
                 .headers(headers)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(this.createMockUser())
-                .when().post("/register-new-user");
+                .when().post("/user/add");
 
         assertEquals("200 must be returned", HttpStatus.FORBIDDEN.value(), response.statusCode());
     }

@@ -1,11 +1,17 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1"/>
+
+<link rel ="stylesheet" href="webjars/bootstrap/4.0.0-2/css/bootstrap.min.css"/>
+<script type="text/javascript" th:src="@{js/bottom.css}" src="../static/css/bottom.css"></script>
+<script type ="text/javascript" src="webjars/jquery/2.2.4/jquery.min.js"></script>
+<script type="text/javascript" th:src="@{js/fv.min.js}" src="../static/js/fv.min.js"></script>
+<script type ="text/javascript" src="webjars/bootstrap/4.0.0-2/js/bootstrap.min.js"></script>
+
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="" />
     <meta name="author" content="" />
     <link rel="icon" href="favicon.ico" />
@@ -27,17 +33,25 @@
 
 <nav class="Header-nav Header-nav--primary" data-nc-element="primary-nav" data-content-field="navigation">
     <div class="container-fluid">
-        <a href="/" class="btn btn-info navbar-btn" data-test="template-nav">Home</a>
-        <a href="/register-new-user" class="btn btn-info navbar-btn" data-test="template-nav">Register New User</a>
-        <a href="/show/1" class="btn btn-info navbar-btn" data-test="template-nav">Show 1st user</a>
-        <a href="/contact" class="btn btn-info navbar-btn" data-test="template-nav">Contact</a>
+        <a href="/" class="btn btn-primary navbar-btn" data-test="template-nav">Home</a>
+        <a href="/user/add" class="btn btn-info navbar-btn" data-test="template-nav">Register New User</a>
+        <a href="/show/1" class="btn btn-success navbar-btn" data-test="template-nav">Show 1st user</a>
+        <a href="/contact" class="btn btn-warning navbar-btn" data-test="template-nav">Contact</a>
     </div>
 </nav>
-
-<div th:switch="${users}" class="alert alert-info">
-    <h2 th:case="null">No users yet!</h2>
+<div th:switch="${users}">
+    <div th:case="null">
+        <span class="lead">No users yet registered!</span></div>
     <div th:case="*">
         <span class="lead">List of Users</span>
+        <div th:if="${successMessage}" class="alert alert-success"
+             role="alert" th:text=${successMessage}></div>
+
+        <div th:if="${confirmationMessage}" class="alert alert-success"
+             role="alert" th:text=${confirmationMessage}></div>
+
+        <div th:if="${errorMessage}" class="alert alert-danger"
+             role="alert" th:text=${errorMessage}></div>
         <table class="table table-hover table-bordered">
             <thead>
             <tr>
@@ -61,21 +75,21 @@
                 <td th:text="${user.lastName}"></td>
 
                 <td th:switch="${user.status}">
-                    <span th:case="'Deactivated'"><a th:href="@{/confirmuser?token={confirmationToken}(confirmationToken=${user.confirmationToken})}">Click here to Activate Your Account</a></span>
+                    <span th:case="'Deactivated'"><a th:href="@{/user/confirm?token={confirmationToken}(confirmationToken=${user.confirmationToken})}">Click here to Activate Your Account</a></span>
                     <span th:case="'Activated'" th:text="${user.confirmationToken}"></span>
                     <span th:case="'*'" th:text="${user.confirmationToken}"></span>
                 </td>
                 <td th:text="${user.status}"></td>
                 <td th:text="${user.regDate}"></td>
-                <td><a th:href="@{/updateuser?userName={userName}(userName=${user.userName})}">Edit</a></td>
+                <td><a th:href="@{/user/update?userName={userName}(userName=${user.userName})}" class="btn btn-primary">Edit</a></td>
 
                 <td th:switch="${user.status}">
                     <span th:case="'Deactivated'">Can't deactivate as user is not active yet</span>
-                    <span th:case="'Activated'"><a th:href="@{/deactivate?id={id}(id=${user.id})}">Deactivate</a></span>
+                    <span th:case="'Activated'"><a th:href="@{/user/deactivate?id={id}(id=${user.id})}" class="btn btn-danger">Deactivate</a></span>
                     <span th:case="'*'">n/a</span>
                 </td>
                 <td th:switch="${user.status}">
-                    <span th:case="'Deactivated'"><a th:href="@{/delete?id={id}(id=${user.id})}">Delete</a></span>
+                    <span th:case="'Deactivated'"><a th:href="@{/user/delete?id={id}(id=${user.id})}" class="btn btn-danger">Delete</a></span>
                     <span th:case="'Activated'">Can't delete as user is still Active</a></span>
                     <span th:case="'*'">n/a</span>
                 </td>
@@ -84,13 +98,6 @@
         </table>
     </div>
 </div>
-    <div ng-view></div><!--
-<script src="/webjars/angularjs/1.4.9/angular.js"></script>
-<script src="/webjars/angularjs/1.4.9/angular-resource.js"></script>
-<script src="/webjars/angularjs/1.4.9/angular-route.js"></script>
-<script src="js/app.js"></script>
-<script src="js/controller.js"></script>
-<link rel="stylesheet" href="/webjars/bootstrap/3.3.6/css/bootstrap.css">-->
-
+    <div ng-view></div>
 </body>
 </html>

@@ -1,22 +1,14 @@
 package com.uxpsystems.assignment.service;
 
-import com.nulabinc.zxcvbn.Strength;
-import com.nulabinc.zxcvbn.Zxcvbn;
 import com.uxpsystems.assignment.dao.IUserRepository;
-import com.uxpsystems.assignment.exception.ApplicationRuntimeCustomErrors;
 import com.uxpsystems.assignment.model.User;
 import com.uxpsystems.assignment.model.UserStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.*;
 
@@ -66,23 +58,15 @@ public class UserService implements IUserService{
     }
 
     @Override
-    public List<User> getAllUsers() {
-        List<User> users = userRepository.findAll();
-        return users;
-    }
-
-    @Override
-    public Optional<User> getUser(Long id) {
+    public Optional<User> findUserById(Long id) {
         Optional<User> user = userRepository.findById(id);
         return user;
     }
 
     @Override
     public String addUser(User user,String appUrl) {
-
         logger.info("~~~~~~~~~~~~~IN addUser ~~~~~~~~~~~~~");
-        // Disable user until the authentication of token is not done
-        // by click on confirmation link sent over the registered email
+        // Disable user until the authentication of token is not done by click on confirmation link sent over the registered email
         user.setStatus(UserStatus.DEACTIVATED.getStatus());
         // Generate random 36-character string token for confirmation link
         user.setConfirmationToken(UUID.randomUUID().toString());
@@ -98,21 +82,7 @@ public class UserService implements IUserService{
     }
 
     @Override
-    public ModelAndView confirmUser(ModelAndView modelAndView,
-                                    BindingResult bindingResult,
-                                    Map<String, String> requestParams,
-                                    RedirectAttributes redir) {
-        modelAndView.setViewName("confirmuser");
-        Zxcvbn passwordCheck = new Zxcvbn();
-        Strength strength = passwordCheck.measure(requestParams.get("password"));
-        if (strength.getScore() < 3) {
-            //modelAndView.addObject("errorMessage", "Your password is too weak.  Choose a stronger one.");
-            bindingResult.reject("password");
-            redir.addFlashAttribute("errorMessage", "Your password is too weak.  Choose a stronger one.");
-            modelAndView.setViewName("redirect:confirmuser?token=" + requestParams.get("token"));
-            logger.error(requestParams.get("token"));
-            return modelAndView;
-        }
+    public void confirmUser(Map<String, String> requestParams) {
         // Find the user associated with the reset token
         User user = userRepository.findByConfirmationToken(requestParams.get("token"));
         // Set new password
@@ -121,8 +91,6 @@ public class UserService implements IUserService{
         user.setStatus(UserStatus.ACTIVATED.getStatus());
         // Save user details
         userRepository.save(user);
-        modelAndView.addObject("successMessage", "Your password has been set!");
-        return modelAndView;
     }
     @Override
     public void deleteUser(User user) { userRepository.delete(user);
@@ -130,10 +98,6 @@ public class UserService implements IUserService{
     @Override
     public void deleteAllUsers() {
         userRepository.deleteAll();
-    }
-    @Override
-    public User findById(Long id) {
-        return userRepository.getOne(id);
     }
     @Override
     public List<User> findAllUsers() {
