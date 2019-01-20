@@ -82,15 +82,26 @@ New User can registrate using this. New user adding function calling on dinamica
 <img src="images/UserRegistrationApp-NewUserRegistration-OnFailure.PNG" title = "New user creacreation failed with given error"/>
 New user creacreation failed with given error.
 
+<h3>User Confirmation</h3>
+<img src="images/UserRegistrationApp-NewUserConfirmation.PNG" title = "User Confirmation"/>
+After User sucessfull registration a sucess email with associated token sent on registered email.
 
+<h3>User Confirmation Successful</h3>
+<img src="images/UserRegistrationApp-NewUserConfirmation-OnSuccess.PNG" title = "User Confirmation Successful"/>
+User Confirmation Successful
 
 <h3>Existing user updating</h3>
-<img src="images/editUser.png" title = "Update existing user"/>
-User can update existing intities. Updating function also calling on dinamical modal.
+<img src="images/UserRegistrationApp-ExistingUserUpdation.PNG" title = "Update existing user"/>
+User can update existing entities.
+
+<h3>Edit User Confirmation</h3>
+<img src="images/UserRegistrationApp-ExistingUserUpdation-OnSuccess.PNG" title = "Edit User"/>
+User Confirmation Editted Successful
+
 
 <h3>Existing user removing</h3>
-<img src="images/removeUser.png" title = "Remove existing user"/>
-User can remove existing intities. To showing alert message calling dinamical modal.
+<img src="images/UserRegistrationApp-DeleteUser" title = "Remove existing user"/>
+User can remove existing intities.
 
 
 ### Swagger API URL of the application
